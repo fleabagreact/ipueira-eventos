@@ -1,0 +1,39 @@
+# Ambiente virtual
+.venv/
+venv/
+env/
+
+# Bytecode e caches do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Arquivos de log
+*.log
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Configurações do VSCode
+.vscode/
+
+# Arquivos de banco de dados locais (opcional)
+*.sqlite3
+*.db
+
+# Arquivos de credenciais ou variáveis de ambiente
+.env
+
+# Distribuição de pacotes
+build/
+dist/
+*.egg-info/
+
+# Testes
+.coverage
+.tox/
+pytest_cache/
+
+# Arquivos gerados por notebooks
+.ipynb_checkpoints/

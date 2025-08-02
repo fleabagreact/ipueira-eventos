@@ -8,6 +8,13 @@ class Admin(Base):
     username = Column(String, unique=True, index=True)
     hashed_password = Column(String)
 
+class Usuario(Base):
+    __tablename__ = "usuarios"
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    criado_em = Column(DateTime, default=datetime.utcnow)
+
 class Evento(Base):
     __tablename__ = "eventos"
     id = Column(Integer, primary_key=True, index=True)

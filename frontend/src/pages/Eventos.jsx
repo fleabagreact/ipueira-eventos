@@ -5,80 +5,80 @@ import EventoForm from "../componentes/EventoForm";
 import EventoCard from "../componentes/EventoCard";
 
 export default function Eventos() {
-  const [eventos, setEventos] = useState([]);
-  const [busca, setBusca] = useState("");
-  const [tipo, setTipo] = useState("");
-  const [editarEvento, setEditarEvento] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem("token"));
-  const [tipoUsuario, setTipoUsuario] = useState(localStorage.getItem("tipoUsuario"));
-  const [username, setUsername] = useState(localStorage.getItem("username"));
+  const [listaEventos, setListaEventos] = useState([]);
+  const [buscaTexto, setBuscaTexto] = useState("");
+  const [filtroTipo, setFiltroTipo] = useState("");
+  const [eventoSelecionado, setEventoSelecionado] = useState(null);
+  const [chaveSessao, setChaveSessao] = useState(localStorage.getItem("token"));
+  const [perfilUsuario, setPerfilUsuario] = useState(localStorage.getItem("tipoUsuario"));
+  const [usuarioAtual, setUsuarioAtual] = useState(localStorage.getItem("username"));
   const navigate = useNavigate();
 
-  const isAdmin = tipoUsuario === "admin";
+  const isAdmin = perfilUsuario === "admin";
 
-  const carregarEventos = async () => {
+  const atualizarEventos = async () => {
     try {
       const res = await api.get("/eventos/");
-      let filtrados = res.data;
+      let eventosFiltrados = res.data;
 
-      if (busca) {
-        filtrados = filtrados.filter(e =>
-          e.titulo.toLowerCase().includes(busca.toLowerCase())
+      if (buscaTexto) {
+        eventosFiltrados = eventosFiltrados.filter(ev =>
+          ev.titulo.toLowerCase().includes(buscaTexto.toLowerCase())
         );
       }
 
-      if (tipo) {
-        filtrados = filtrados.filter(e => e.tipo === tipo);
+      if (filtroTipo) {
+        eventosFiltrados = eventosFiltrados.filter(ev => ev.tipo === filtroTipo);
       }
 
-      setEventos(filtrados);
-    } catch (error) {
-      if (error.response?.status === 401) {
+      setListaEventos(eventosFiltrados);
+    } catch (err) {
+      if (err.response?.status === 401) {
         alert("Sessão expirada. Faça login novamente.");
         localStorage.clear();
         navigate("/");
       } else {
-        alert("Erro ao carregar eventos");
+        alert("Erro ao carregar eventos.");
       }
     }
   };
 
-  const excluirEvento = async (id) => {
+  const removerEvento = async (id) => {
     try {
       await api.delete(`/eventos/${id}`);
-      carregarEventos();
-    } catch (error) {
-      if (error.response?.status === 401) {
+      atualizarEventos();
+    } catch (err) {
+      if (err.response?.status === 401) {
         alert("Você não tem permissão para excluir este evento.");
       } else {
-        alert("Erro ao excluir evento");
+        alert("Erro ao excluir evento.");
       }
     }
   };
 
   useEffect(() => {
-    if (!token || !tipoUsuario) {
+    if (!chaveSessao || !perfilUsuario) {
       alert("Você precisa estar logado.");
       navigate("/");
       return;
     }
 
-    carregarEventos();
-  }, [busca, tipo]);
+    atualizarEventos();
+  }, [buscaTexto, filtroTipo]);
 
   return (
     <div className="container">
-      <div className="d-flex justify-content-between align-items-center mt-4 mb-3">
-        <h2>Eventos</h2>
+      <div className="header-eventos">
+        <h2>Eventos em Ipueira</h2>
         <div className="d-flex align-items-center gap-3">
-          <span className="fw-bold">Olá, {username}</span>
+          <span className="usuario-nome">Olá, {usuarioAtual}</span>
           <button
             className="btn btn-outline-danger"
             onClick={() => {
               localStorage.clear();
-              setToken(null);
-              setTipoUsuario(null);
-              setUsername(null);
+              setChaveSessao(null);
+              setPerfilUsuario(null);
+              setUsuarioAtual(null);
               navigate("/");
             }}
           >
@@ -87,17 +87,17 @@ export default function Eventos() {
         </div>
       </div>
 
-      <div className="d-flex gap-2 mb-3">
+      <div className="filtros-eventos">
         <input
           className="form-control"
           placeholder="Buscar por título"
-          value={busca}
-          onChange={(e) => setBusca(e.target.value)}
+          value={buscaTexto}
+          onChange={(e) => setBuscaTexto(e.target.value)}
         />
         <select
           className="form-select"
-          value={tipo}
-          onChange={(e) => setTipo(e.target.value)}
+          value={filtroTipo}
+          onChange={(e) => setFiltroTipo(e.target.value)}
         >
           <option value="">Todos os tipos</option>
           <option value="Festival">Festival</option>
@@ -109,19 +109,19 @@ export default function Eventos() {
 
       {isAdmin && (
         <EventoForm
-          carregarEventos={carregarEventos}
-          eventoParaEditar={editarEvento}
-          limparEdicao={() => setEditarEvento(null)}
+          carregarEventos={atualizarEventos}
+          eventoParaEditar={eventoSelecionado}
+          limparEdicao={() => setEventoSelecionado(null)}
         />
       )}
 
-      <div className="row mt-4">
-        {eventos.map((evento) => (
+      <div className="d-flex flex-wrap gap-4 justify-content-center mt-4">
+        {listaEventos.map((evento) => (
           <EventoCard
             key={evento.id}
             evento={evento}
-            onDelete={() => excluirEvento(evento.id)}
-            onEdit={() => setEditarEvento(evento)}
+            onDelete={() => removerEvento(evento.id)}
+            onEdit={() => setEventoSelecionado(evento)}
             podeEditar={isAdmin}
           />
         ))}

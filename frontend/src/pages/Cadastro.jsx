@@ -3,36 +3,39 @@ import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
 
 export default function Cadastro() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [novoUsuario, setNovoUsuario] = useState("");
+  const [novaSenha, setNovaSenha] = useState("");
   const navigate = useNavigate();
 
-  const handleCadastro = async (e) => {
+  const registrarConta = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await api.post("/auth/register", { username, password });
+      const res = await api.post("/auth/register", {
+        username: novoUsuario,
+        password: novaSenha,
+      });
 
-      localStorage.setItem("token", response.data.access_token);
-      localStorage.setItem("tipoUsuario", response.data.role);
-      localStorage.setItem("username", username);
+      localStorage.setItem("token", res.data.access_token);
+      localStorage.setItem("tipoUsuario", res.data.role);
+      localStorage.setItem("username", novoUsuario);
 
       navigate("/eventos");
-    } catch (error) {
-      alert("Erro ao cadastrar: " + (error.response?.data?.detail || "Tente novamente."));
+    } catch (err) {
+      alert("Erro ao cadastrar: " + (err.response?.data?.detail || "Tente novamente."));
     }
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: "400px" }}>
-      <h2>Cadastro</h2>
-      <form onSubmit={handleCadastro}>
+    <div className="caixa-formulario">
+      <h2>Cadastro na Plataforma de Eventos de Ipueira</h2>
+      <form onSubmit={registrarConta}>
         <div className="mb-3">
           <label className="form-label">Usuário</label>
           <input
             className="form-control"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={novoUsuario}
+            onChange={(e) => setNovoUsuario(e.target.value)}
             required
           />
         </div>
@@ -42,8 +45,8 @@ export default function Cadastro() {
           <input
             type="password"
             className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={novaSenha}
+            onChange={(e) => setNovaSenha(e.target.value)}
             required
           />
         </div>

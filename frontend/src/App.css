@@ -1,42 +1,188 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+body {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f9;
+  color: #212529;
+  margin: 0;
+  padding: 0;
+}
+
+.pagina-inicial {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h1, h2 {
+  font-weight: 700;
+  color: #1f2d3d;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+h1 {
+  font-size: 2.6rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+.btn {
+  border-radius: 0.5rem;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.caixa-formulario {
+  max-width: 420px;
+  background-color: #ffffff;
+  padding: 2rem;
+  margin: 3rem auto;
+  border-radius: 1rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.caixa-formulario label {
+  font-weight: 600;
+}
+
+.form-control,
+.form-select {
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  padding: 0.6rem 0.75rem;
+}
+
+.filtros-eventos {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.cartao-evento {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+  border: 1px solid #e2e6ea;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.cartao-evento:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.header-eventos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.usuario-nome {
+  font-weight: 600;
+  color: #444;
+}
+
+.evento-card {
+  background-color: #fefefe;
+  border: 1px solid #e2e2e2;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  max-width: 100%;
+  color: #333;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.evento-card:hover {
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.evento-card h3,
+.evento-card p {
+  margin: 0;
+  line-height: 1.4rem;
+  word-break: break-word;
+}
+
+.evento-card .conteudo-texto {
+  flex: 1 1 auto;
+}
+
+.container-eventos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: stretch;
+  max-width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.evento-form {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.evento-form .form-label i,
+.evento-form button i {
+  opacity: 0.7;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .filtros-eventos {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+
+  .btn {
+    width: 100%;
+  }
+
+  .pagina-inicial h1 {
+    font-size: 2rem;
+  }
+
+  .caixa-formulario {
+    padding: 1.2rem;
+    margin: 1.5rem auto;
+  }
+
+  .evento-form {
+    padding: 1.2rem;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@media (max-width: 576px) {
+  .cartao-evento {
+    max-width: 100%;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }

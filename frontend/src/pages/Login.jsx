@@ -3,36 +3,39 @@ import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [usuario, setUsuario] = useState("");
+  const [senha, setSenha] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const autenticar = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await api.post("/auth/login", { username, password });
+      const res = await api.post("/auth/login", {
+        username: usuario,
+        password: senha,
+      });
 
-      localStorage.setItem("token", response.data.access_token);
-      localStorage.setItem("tipoUsuario", response.data.role);
-      localStorage.setItem("username", username);
+      localStorage.setItem("token", res.data.access_token);
+      localStorage.setItem("tipoUsuario", res.data.role);
+      localStorage.setItem("username", usuario);
 
       navigate("/eventos");
-    } catch (error) {
-      alert("Erro ao fazer login: " + (error.response?.data?.detail || "Tente novamente."));
+    } catch (err) {
+      alert("Erro ao fazer login: " + (err.response?.data?.detail || "Tente novamente."));
     }
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: "400px" }}>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+    <div className="caixa-formulario">
+      <h2>Login na Plataforma de Eventos de Ipueira</h2>
+      <form onSubmit={autenticar}>
         <div className="mb-3">
           <label className="form-label">Usuário</label>
           <input
             className="form-control"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={usuario}
+            onChange={(e) => setUsuario(e.target.value)}
             required
           />
         </div>
@@ -42,8 +45,8 @@ export default function Login() {
           <input
             type="password"
             className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
             required
           />
         </div>

@@ -3,19 +3,20 @@
 ## Visão Geral
 
 **Tecnologias Utilizadas:**
-- Python 3.10+
-- FastAPI
-- Uvicorn
-- SQLAlchemy
-- SQLite
-- JWT (com `python-jose`)
-- Pydantic
-- Passlib (para hashing de senhas)
 
-**Descrição:**  
+* Python 3.10+
+* FastAPI
+* Uvicorn
+* SQLAlchemy
+* SQLite
+* JWT (com `python-jose`)
+* Pydantic
+* Passlib (para hashing de senhas)
+
+**Descrição:**
 Plataforma Web para gestão de eventos comunitários da cidade de Ipueira, com foco na organização, divulgação e acompanhamento de eventos como festivais, campeonatos, reuniões culturais e religiosas.
 
-**Objetivo:**  
+**Objetivo:**
 Facilitar o cadastro, gerenciamento e divulgação de eventos comunitários, com funcionalidades de autenticação, filtros, avaliações e inteligência artificial para recomendações e prevenção de conflitos de agenda.
 
 ---
@@ -41,7 +42,17 @@ ipueira-eventos/
 └── frontend/              # Código do frontend
     ├── src/              # Código fonte do frontend
     │   ├── App.jsx       # Componente principal da aplicação
+    │   ├── componentes/  # Componentes reutilizáveis
+    │   │   ├── EventoCard.jsx
+    │   │   ├── EventoForm.jsx
+    │   │   └── PrivateRoute.jsx
     │   ├── pages/        # Páginas da aplicação
+    │   │   ├── Home.jsx
+    │   │   ├── Login.jsx
+    │   │   ├── Cadastro.jsx
+    │   │   └── Eventos.jsx
+    │   ├── services/     # Comunicação com backend
+    │   │   └── api.js
     │   ├── assets/       # Recursos estáticos
     │   └── index.html    # HTML principal
     ├── .env              # Variáveis de ambiente
@@ -53,30 +64,33 @@ ipueira-eventos/
 
 ## Funcionalidades Principais
 
-- **Autenticação JWT**: Cadastro e login de administradores.
-- **CRUD de Eventos**: Criar, visualizar, atualizar e excluir eventos.
-- **Interação do Usuário**: Avaliação e comentários de eventos.
-- **Filtros Inteligentes**: Pesquisa por data, local e tipo de evento.
-- **Recomendações com IA**: Sugestões de eventos com base em interações passadas.
-- **Detecção de Conflitos**: IA identifica conflitos de agenda e sugere alternativas.
+* **Autenticação JWT**: Cadastro e login de administradores.
+* **CRUD de Eventos**: Criar, visualizar, atualizar e excluir eventos.
+* **Interação do Usuário**: Avaliação e comentários de eventos.
+* **Filtros Inteligentes**: Pesquisa por data, local e tipo de evento.
+* **Recomendações com IA**: Sugestões de eventos com base em interações passadas.
+* **Detecção de Conflitos**: IA identifica conflitos de agenda e sugere alternativas.
 
 ---
 
 ## Como Executar o Projeto
 
 ### Pré-requisitos
-- Python 3.10+ instalado
-- Git (opcional para clonar)
+
+* Python 3.10+ instalado
+* Git (opcional para clonar)
 
 ### Instalação
 
 1. Clone o repositório:
+
    ```bash
    git clone https://github.com/seu-usuario/ipueira-eventos.git
    cd ipueira-eventos
    ```
 
 2. Configure o ambiente virtual:
+
    ```bash
    python -m venv venv
    # Windows:
@@ -86,23 +100,27 @@ ipueira-eventos/
    ```
 
 3. Instale as dependências do backend:
+
    ```bash
    cd backend
    pip install -r requirements.txt
    ```
 
 4. Inicie a aplicação do backend:
+
    ```bash
    uvicorn main:app --reload
    ```
 
 5. Para o frontend, navegue até a pasta `frontend` e instale as dependências:
+
    ```bash
    cd ../frontend
    npm install
    ```
 
 6. Inicie a aplicação do frontend:
+
    ```bash
    npm run dev
    ```
@@ -145,12 +163,17 @@ As principais dependências do frontend estão listadas em `package.json`:
 ```
 
 Para instalar todas as dependências, execute:
+
 ```bash
 pip install -r requirements.txt
 ```
+
 e
+
 ```bash
 npm install
 ```
 
 ---
+
+assim caralho

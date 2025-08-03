@@ -175,5 +175,3 @@ npm install
 ```
 
 ---
-
-assim caralho

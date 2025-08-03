@@ -11,7 +11,7 @@
 * SQLite
 * JWT (com `python-jose`)
 * Pydantic
-* Passlib (para hashing de senhas)
+* Passlib (para hashing de senha)
 
 **Descrição:**
 Plataforma Web para gestão de eventos comunitários da cidade de Ipueira, com foco na organização, divulgação e acompanhamento de eventos como festivais, campeonatos, reuniões culturais e religiosas.

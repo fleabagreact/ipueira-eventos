@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import EventoForm from "../componentes/EventoForm";
 import EventoCard from "../componentes/EventoCard";
@@ -10,6 +11,8 @@ export default function Eventos() {
   const [editarEvento, setEditarEvento] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [tipoUsuario, setTipoUsuario] = useState(localStorage.getItem("tipoUsuario"));
+  const [username, setUsername] = useState(localStorage.getItem("username"));
+  const navigate = useNavigate();
 
   const isAdmin = tipoUsuario === "admin";
 
@@ -32,10 +35,8 @@ export default function Eventos() {
     } catch (error) {
       if (error.response?.status === 401) {
         alert("Sessão expirada. Faça login novamente.");
-        localStorage.removeItem("token");
-        localStorage.removeItem("tipoUsuario");
-        setToken(null);
-        setTipoUsuario(null);
+        localStorage.clear();
+        navigate("/");
       } else {
         alert("Erro ao carregar eventos");
       }
@@ -56,12 +57,35 @@ export default function Eventos() {
   };
 
   useEffect(() => {
+    if (!token || !tipoUsuario) {
+      alert("Você precisa estar logado.");
+      navigate("/");
+      return;
+    }
+
     carregarEventos();
   }, [busca, tipo]);
 
   return (
     <div className="container">
-      <h2 className="mt-4">Eventos</h2>
+      <div className="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <h2>Eventos</h2>
+        <div className="d-flex align-items-center gap-3">
+          <span className="fw-bold">Olá, {username}</span>
+          <button
+            className="btn btn-outline-danger"
+            onClick={() => {
+              localStorage.clear();
+              setToken(null);
+              setTipoUsuario(null);
+              setUsername(null);
+              navigate("/");
+            }}
+          >
+            Sair
+          </button>
+        </div>
+      </div>
 
       <div className="d-flex gap-2 mb-3">
         <input
